@@ -10,21 +10,21 @@ import MicNoneOutlinedIcon from "@material-ui/icons/MicNoneOutlined";
 import MicOffOutlinedIcon from "@material-ui/icons/MicOffOutlined";
 import ScreenShareIcon from "@material-ui/icons/ScreenShare";
 import IconButton from "@material-ui/core/IconButton";
-
-
+import Axios from "../service";
+import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 
 
 const Video = (props) => {
     const ref = useRef();
     useEffect(() => {
-        console.log(props.peer)
         props.data.peer.on("stream", stream => {
             ref.current.srcObject = stream;
         })
     }, []);
 
     return (
-        <video  className="video" playsInline autoPlay ref={ref} />
+        <video className="video" playsInline autoPlay ref={ref} />
     );
 }
 
@@ -34,23 +34,33 @@ const Room = (props) => {
     const userVideo = useRef();
     const peersRef = useRef([]);
     const [audio, setaudio] = useState(true);
+    const [allowed, setallowed] = useState(false);
     const [video, setvideo] = useState(true);
     const roomID = props.match.params.roomID;
+    const [loading, setloading] = useState(true);
 
     useEffect(() => {
-
         socketRef.current = io.connect("https://groupvideo-backend.herokuapp.com/", {
             transports: ['websocket']
         });
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
 
-            document.getElementById("myVideo").srcObject = stream;
-            socketRef.current.emit("join room", roomID);
-            socketRef.current.on("all users", users => {
-                console.log(users)
+
+
+            let person = prompt("Please enter your name:", "");
+            if (person === null || person === "") {
+                toast("Name is Required");
+                window.location.href="/"
+            } else {
+                socketRef.current.emit("join room", roomID, person);
+            }
+
+            socketRef.current.on("all users", data => {
+                setallowed(data.allowed)
+                document.getElementById("myVideo").srcObject = stream;
                 const peers = [];
-                users.forEach(userID => {
+                data.users.forEach(userID => {
                     const peer = createPeer(userID, socketRef.current.id, stream);
                     peersRef.current.push({
                         peerID: userID,
@@ -70,12 +80,31 @@ const Room = (props) => {
 
                 setPeers(users => [...users, peer]);
             });
+            socketRef.current.on("removed", () => {
+                window.location.href = "/"
+            });
 
             socketRef.current.on("receiving returned signal", payload => {
                 const item = peersRef.current.find(p => p.peerID === payload.id);
                 item.peer.signal(payload.signal);
             });
+            socketRef.current.on('newUser', (data) => {
+                console.log(data)
+                if (window.confirm(data.name+" wants to join?")) {
+                    socketRef.current.emit('confirm', props.match.params.roomID, data.socketId)
+                }
+                else {
+
+                    socketRef.current.emit('remove', data.socketId)
+                }
+            })
         })
+
+
+
+
+
+
     }, []);
 
     function createPeer(userToSignal, callerID, stream) {
@@ -124,6 +153,31 @@ const Room = (props) => {
         peer.signal(incomingSignal);
 
         return peer;
+    }
+
+    if (!allowed) {
+        return <div className="container-fluid" style={{ padding: "0" }}>
+            {loading ? <center><ClipLoader color={'blue'} loading={loading} size={150} /></center> :
+
+                <div className="container gateway-container mx-auto mt-2 ">
+                    <div className="justify-content-center order-1 ">
+                        <video className="video-gateway"
+                            playsInline
+                            muted
+                            id="myVideo"
+                            ref={userVideo}
+                            autoPlay
+                        />
+                    </div>
+                    {/* <div className="gateway-info text-center order-2">
+                    <h5>Welcome! <i></i>
+                        <br />  All things are goods.</h5>
+                    <button  className="btn btn-join-gateway">Join</button>
+                </div> */}
+                </div>
+
+            }
+        </div>
     }
 
     return (
