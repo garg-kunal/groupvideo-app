@@ -4,6 +4,9 @@
 body{
   overflow: none;
 }
+::-webkit-scrollbar{
+  width: 0.5rem;
+}
 .main-container{
   overflow:none;
   min-height: 100vh !important;
@@ -12,23 +15,22 @@ body{
   flex-direction: column;
 }
 .video-container{
-  width: 96vw;
+  /* width: 96vw; */
   margin:10px;
-  align-items: center;
-  overflow: scrool;
+  align-items: flex-start;
+  overflow-y: scroll;
   display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  /* background-color: aqua; */
-  min-height: 75vh !important;
-  max-height: 75vh !important;
+  align-content: stretch;
+  flex-flow:row wrap;
+  height: 75vh !important;
 }
 .video{
   min-width:18rem;
-  max-width: 20rem;
+  max-width: 19.5rem;
   border-radius: 5px;
   object-fit: contain;
   margin: 4px;
+  flex:none;
 }
 
 .footer{
