@@ -9,7 +9,7 @@ const CreateRoom = (props) => {
 
 
     function create() {
-        console.log('create room')
+     
         Axios.post('/create-room').then((res) => {
             props.history.push({
                 pathname: `/room/${res.data.roomId}`,
@@ -36,9 +36,9 @@ const CreateRoom = (props) => {
 
     return (
         <div className="xlg:container p-0">
-            <Navbar />
+            {/* <Navbar /> */}
             <Notification />
-            <div class="box-border mt-16 rounded-md h-auto pb-8 lg:w-1/3 sm:w-1/2 p-4 mx-auto border-1 bg-gray-200">
+            <div className="box-border mt-16 rounded-md h-auto pb-8 lg:w-1/3 sm:w-1/2 p-4 mx-auto border-1 bg-gray-200">
                 <p className="text-center m-4 text-lg font-bold">{msg}</p>
                 <input className="form-control w-full p-2 border-0" type="text" placeholder="Enter Room Id" required value={room} onChange={(e) => { setmsg("Welcome"); setroom(e.target.value) }} />
                 <button className="bg-blue-600 rounded-md p-2 justify-center mt-4 w-full" style={{ color: "white" }} onClick={join}>Join room</button>
