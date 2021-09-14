@@ -46,12 +46,12 @@ const Room = (props) => {
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
-        // socketRef.current = io.connect("https://groupvideo-backend.herokuapp.com/", {
-        //     transports: ['websocket']
-        // });
-        socketRef.current = io.connect("http://localhost:4000/", {
+        socketRef.current = io.connect("https://groupvideo-backend.herokuapp.com/", {
             transports: ['websocket']
         });
+        // socketRef.current = io.connect("http://localhost:4000/", {
+        //     transports: ['websocket']
+        // });
 
         //
 
