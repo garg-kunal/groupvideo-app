@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const instance = axios.create({
-    baseURL: "https://groupvideo-backend.herokuapp.com/"
+    baseURL: process.env.REACT_APP_ENDPOINT
 });
 
 

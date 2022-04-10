@@ -1,40 +1,39 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
-body{
+body {
   overflow: none;
-
 }
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 0.5rem;
 }
-.main-container{
-  overflow:none;
+.main-container {
+  overflow: none;
   min-height: 100vh !important;
   max-height: 100vh !important;
   display: flex;
   flex-direction: column;
 }
-.video-container{
+.video-container {
   /* width: 96vw; */
-  margin-top:-20px;
+  margin-top: -20px;
   align-items: flex-start;
   overflow-y: scroll;
-  display:flex;
+  display: flex;
   align-content: stretch;
-  flex-flow:row wrap;
+  flex-flow: row wrap;
   height: 75vh !important;
 }
-.video{
-  min-width:18rem;
+.video {
+  min-width: 18rem;
   max-width: 19.5rem;
   border-radius: 5px;
   object-fit: contain;
   margin: 4px;
-  flex:none;
+  flex: none;
 }
 
-.footer{
+.footer {
   bottom: 0;
   align-items: center;
   background-color: transparent;
@@ -46,22 +45,20 @@ body{
   width: 100vw;
   /* z-index: 100; */
 }
-.footer-btns{
+.footer__actions {
   display: flex;
   border: none;
   justify-content: flex-start;
 }
 
-.on{
+.on {
   color: white;
   border-radius: 50%;
   background-color: rgb(0, 119, 255);
   padding: 10px;
   border: none;
-  /* margin: 10px; */
 }
-.off{
-  /* margin: 10px; */
+.off {
   color: white;
   padding: 10px;
   border-radius: 50%;
@@ -69,9 +66,7 @@ body{
   background-color: red;
 }
 
-
-
-.user-info-card{
+.user-info-card {
   display: flex;
   margin-left: 20px;
   margin-right: 20px;
@@ -80,7 +75,7 @@ body{
   align-items: center;
 }
 
-.msg-bar{
+.msg-bar {
   margin: 10px !important;
   width: auto;
   margin-bottom: 0;
@@ -93,22 +88,27 @@ body{
   border: 2px solid lightgrey;
   padding: 5px;
   border-radius: 5px;
- width: 280px;
+  width: 280px;
 }
-.msg-bar span{
+.msg-bar span {
   cursor: pointer;
 }
-input {border:0;outline:0;}
-input:focus {outline:none!important;}
+input {
+  border: 0;
+  outline: 0;
+}
+input:focus {
+  outline: none !important;
+}
 
-.messages{
+.messages {
   display: flex;
   flex-direction: column;
-  height: 75vh!important;
+  height: 75vh !important;
   overflow-y: scroll;
 }
 
-.chatCard{
+.chatCard {
   margin: 5px;
   border-radius: 5px;
   background-color: lavender;
@@ -117,7 +117,7 @@ input:focus {outline:none!important;}
   flex-direction: column;
   overflow-y: scroll;
 }
-.chatbar{
+.chatbar {
   font-size: 0.9rem;
   font-weight: 600;
   display: flex;
